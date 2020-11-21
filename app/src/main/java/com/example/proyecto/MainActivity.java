@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextEmail, editTextPass;
     private String name, email, pass;
-    private Button btnRegistrar;
+    private Button btnRegistrar, btnAcceder;
 
     FirebaseAuth mAuth;
     DatabaseReference mDataBase;
@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         editTextPass = (EditText) findViewById(R.id.editTextPass);
 
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
+        btnAcceder = (Button) findViewById(R.id.btnAcceder);
+
+        btnAcceder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AccessActivity.class));
+            }
+        });
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override

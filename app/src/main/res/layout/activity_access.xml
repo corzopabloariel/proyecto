@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".MainActivity">
+    tools:context=".AccessActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -15,12 +15,6 @@
         android:maxHeight="200dp"
         android:scaleType="fitStart"
         android:src="@drawable/img" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nombre"/>
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -37,29 +31,16 @@
         android:inputType="textPassword"
         android:hint="Contraseña"/>
 
-
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:gravity="bottom"
-        android:stretchColumns="1">
+        android:gravity="bottom">
 
-        <TableRow>
-            <Button
-                android:id="@+id/btnRegistrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Registrar" />
-            <Button
-                android:id="@+id/btnAcceder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:textColor="@color/common_google_signin_btn_text_light"
-                android:text="Acceder"/>
-        </TableRow>
-
-    </TableLayout>
+        <Button
+            android:id="@+id/btnAcceder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Acceder" />
+    </LinearLayout>
 </LinearLayout>
