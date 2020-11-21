@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void  registrarUsuario() {
+    private void registrarUsuario() {
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
