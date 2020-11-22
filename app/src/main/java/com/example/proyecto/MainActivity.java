@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            finish();
+        }
         mDataBase = FirebaseDatabase.getInstance().getReference();
 
         editTextName = (EditText) findViewById(R.id.editTextName);

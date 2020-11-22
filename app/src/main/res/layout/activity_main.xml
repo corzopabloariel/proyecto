@@ -20,14 +20,15 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre"/>
+        android:hint="@string/txt_name"/>
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Email"/>
+        android:inputType="textEmailAddress"
+        android:hint="@string/txt_email"/>
 
     <EditText
         android:id="@+id/editTextPass"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:inputType="textPassword"
-        android:hint="Contraseña"/>
+        android:hint="@string/txt_pass"/>
 
 
     <TableLayout
@@ -51,14 +52,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Registrar" />
+                android:backgroundTint="@color/link"
+                android:background="@color/link"
+                android:text="@string/btn_registrar" />
             <Button
                 android:id="@+id/btnAcceder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:textColor="@color/common_google_signin_btn_text_light"
-                android:text="Acceder"/>
+                android:textColor="@color/link"
+                android:text="@string/btn_acceder"/>
         </TableRow>
 
     </TableLayout>
