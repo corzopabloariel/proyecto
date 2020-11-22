@@ -1,5 +1,6 @@
 package com.example.proyecto;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,11 +13,16 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private TextView txtBienvenida;
     private Button btnSalir;
 
@@ -27,25 +33,35 @@ public class ProfileActivity extends AppCompatActivity {
 
         txtBienvenida = (TextView) findViewById(R.id.txtBienvenida);
         btnSalir = (Button) findViewById(R.id.btnSalir);
-
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        for(UserInfo profile : mUser.getProviderData()) {
-            String providerId = profile.getProviderId();
-            // UID specific to the provider
-            String uid = profile.getUid();
-
-            // Name, email address, and profile photo Url
-            String name = profile.getDisplayName();
-            String email = profile.getEmail();
-
-            txtBienvenida.setText("Hola " + name);
-        }
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logout();
+            }
+        });
+
+        getUserInfo();
+    }
+
+    private void getUserInfo() {
+        String id = mAuth.getCurrentUser().getUid();
+        mDatabase.child("users").child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String name = snapshot.child("name").getValue().toString();
+                    String email = snapshot.child("email").getValue().toString();
+
+                    txtBienvenida.setText("Hola " + name);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

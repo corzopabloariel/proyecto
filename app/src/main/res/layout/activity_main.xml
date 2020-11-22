@@ -47,13 +47,13 @@
         android:stretchColumns="1">
 
         <TableRow>
+
             <Button
                 android:id="@+id/btnRegistrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:backgroundTint="@color/link"
-                android:background="@color/link"
                 android:text="@string/btn_registrar" />
             <Button
                 android:id="@+id/btnAcceder"

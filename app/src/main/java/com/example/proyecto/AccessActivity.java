@@ -43,6 +43,8 @@ public class AccessActivity extends AppCompatActivity {
 
                 if (!email.isEmpty() && !pass.isEmpty()) {
                     accederUsuario();
+                } else {
+                    Toast.makeText(AccessActivity.this, "Debe completar los datos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

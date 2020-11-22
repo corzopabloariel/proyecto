@@ -42,6 +42,7 @@
             android:id="@+id/btnAcceder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_acceder" />
+            android:backgroundTint="@color/link"
+            android:text="@string/btn_iniciar" />
     </LinearLayout>
 </LinearLayout>

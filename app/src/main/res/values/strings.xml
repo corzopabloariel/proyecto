@@ -4,6 +4,7 @@
     <string name="txt_email">Email</string>
     <string name="txt_pass">Contraseña</string>
     <string name="btn_acceder">Acceder</string>
+    <string name="btn_iniciar">Iniciar sesión</string>
     <string name="btn_registrar">Registrar</string>
     <string name="btn_salir">Salir</string>
 </resources>
