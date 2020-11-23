@@ -19,26 +19,34 @@
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:hint="@string/txt_name"/>
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:inputType="textEmailAddress"
             android:hint="@string/txt_email"/>
         <EditText
             android:id="@+id/editTextPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:inputType="textPassword"
             android:hint="@string/txt_pass"/>
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:stretchColumns="1">
             <TableRow>
                 <Button

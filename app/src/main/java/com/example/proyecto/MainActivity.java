@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -27,15 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements
-    BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextName, editTextEmail, editTextPass;
-    private String name, email, pass;
-    private Button btnRegistrar, btnAcceder;
-
-    FirebaseAuth mAuth;
-    DatabaseReference mDataBase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDataBase;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +45,69 @@ public class MainActivity extends AppCompatActivity implements
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
 
-        FirstFragment firstFragment = new FirstFragment();
+        fragmentHome();
+    }
+
+    private void fragmentHome() {
+        Fragment fragment = new FirstFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flFragment, firstFragment);
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentPerson() {
+        Fragment fragment = new PersonFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_nav_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                fragment = new FirstFragment();
-                break;
+                fragmentHome();
+                return true;
             case R.id.person:
-                fragment = new PersonFragment();
-                break;
+                fragmentPerson();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.flFragment, fragment);
-        transaction.commit();
-        return false;
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.home:
+                fragmentHome();
+                return true;
+            case R.id.person:
+                fragmentPerson();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
