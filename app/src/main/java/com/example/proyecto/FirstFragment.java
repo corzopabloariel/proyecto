@@ -34,21 +34,28 @@ public class FirstFragment extends Fragment {
     FirebaseAuth mAuth;
     DatabaseReference mDataBase;
 
+    public FirstFragment() {
+        // Required empty public constructor
+    }
+
+    public static FirstFragment newInstance() {
+        FirstFragment fragment = new FirstFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(getActivity(), "Nada", Toast.LENGTH_SHORT).show();
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-        getActivity().findViewById(R.id.person).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new PersonFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flFragment, fragment, fragment.getTag())
-                        .commit();
-            }
-        });
         return view;
     }
 }

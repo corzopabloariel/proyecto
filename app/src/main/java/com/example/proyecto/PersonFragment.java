@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +37,22 @@ public class PersonFragment extends Fragment {
     private EditText editTextName, editTextEmail, editTextPass;
     private String name, email, pass;
     private Button btnRegistrar, btnAcceder;
+
+    public PersonFragment() {
+        // Required empty public constructor
+    }
+
+    public static PersonFragment newInstance() {
+        PersonFragment fragment = new PersonFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
