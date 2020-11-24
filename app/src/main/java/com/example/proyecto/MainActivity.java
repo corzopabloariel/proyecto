@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
 
-        //fragmentHome();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -52,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.home:
-                        Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
+                        fragmentHome();
                         break;
                     case R.id.person:
-                        Toast.makeText(MainActivity.this, "Persona", Toast.LENGTH_SHORT).show();
+                        fragmentPerson();
                         break;
                     default:
                         Toast.makeText(MainActivity.this, "Nada", Toast.LENGTH_SHORT).show();
@@ -67,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void fragmentHome() {
         Fragment fragment = new FirstFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentPerson() {
+        Fragment fragment = new PersonFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.flFragment, fragment);

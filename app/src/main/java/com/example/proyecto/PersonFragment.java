@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.proyecto.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -74,6 +75,12 @@ public class PersonFragment extends Fragment {
                         .commit();
             }
         });
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrarUsuario();
+            }
+        });
         return view;
     }
 
@@ -83,12 +90,12 @@ public class PersonFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Map<String, Object> map = new HashMap<>();
-
                     map.put("name", name);
                     map.put("email", email);
                     map.put("pass", pass);
 
                     String id = mAuth.getCurrentUser().getUid();
+                    User u = new User(id, name, email, pass);
                     mDataBase.child("users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task_u) {
