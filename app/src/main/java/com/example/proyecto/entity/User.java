@@ -1,5 +1,20 @@
 package com.example.proyecto.entity;
 
+import android.content.Intent;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.example.proyecto.ProfileActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     private String _id;
     private String _name;
@@ -7,19 +22,26 @@ public class User {
     private String _pass;
     private Integer _dni;
     private boolean _isAdmin;
+    private FirebaseAuth _mAuth;
+    private DatabaseReference _mDataBase;
 
-    public User(String _id, String name, String email, String pass) {
-        this._id = _id;
+    public User(String name, String email, String pass) {
         this._name = name;
         this._email = email;
         this._pass = pass;
     }
 
+    public String welcome() {
+        return "Hola " + this._name;
+    }
+
     /* GETTERS */
+    public String get_id() {
+        return _id;
+    }
     public String get_name() {
         return _name;
     }
-
     public String get_email() {
         return _email;
     }
@@ -37,6 +59,9 @@ public class User {
     }
 
     /* SETTERS */
+    public void set_id(String _id) {
+        this._name = _id;
+    }
     public void set_name(String _name) {
         this._name = _name;
     }

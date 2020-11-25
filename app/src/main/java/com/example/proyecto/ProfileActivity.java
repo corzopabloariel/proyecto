@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.proyecto.entity.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -54,8 +55,10 @@ public class ProfileActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String name = snapshot.child("name").getValue().toString();
                     String email = snapshot.child("email").getValue().toString();
+                    User user = new User(name, email, snapshot.child("pass").getValue().toString());
+                    user.set_id(id);
 
-                    txtBienvenida.setText("Hola " + name);
+                    txtBienvenida.setText(user.welcome());
                 }
             }
 

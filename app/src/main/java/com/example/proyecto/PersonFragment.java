@@ -32,7 +32,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class PersonFragment extends Fragment {
-
     FirebaseAuth mAuth;
     DatabaseReference mDataBase;
     private EditText editTextName, editTextEmail, editTextPass;
@@ -75,16 +74,41 @@ public class PersonFragment extends Fragment {
                         .commit();
             }
         });
+        btnAcceder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new AccessFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flFragment, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarUsuario();
+                name = editTextName.getText().toString();
+                email = editTextEmail.getText().toString();
+                pass = editTextPass.getText().toString();
+
+                if (!name.isEmpty() && !email.isEmpty() && !pass.isEmpty()) {
+                    if (pass.length() >= 6) {
+                        registrarUsuario();
+                    } else {
+                        // Detalle de Firebase
+                        Toast.makeText(getActivity(), "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
     }
 
     private void registrarUsuario() {
+        User user = new User(name, email, pass);
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -95,7 +119,7 @@ public class PersonFragment extends Fragment {
                     map.put("pass", pass);
 
                     String id = mAuth.getCurrentUser().getUid();
-                    User u = new User(id, name, email, pass);
+                    user.set_id(id);
                     mDataBase.child("users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task_u) {
