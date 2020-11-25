@@ -124,8 +124,12 @@ public class PersonFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task_u) {
                             if (task_u.isSuccessful()) {
-                                startActivity(new Intent(getActivity(), ProfileActivity.class));
-                                getActivity().finish();
+                                Fragment fragment = new AccountFragment();
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flFragment, fragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
                             } else {
                                 Toast.makeText(getActivity(), "No se pudo crear los datos", Toast.LENGTH_SHORT).show();
                             }

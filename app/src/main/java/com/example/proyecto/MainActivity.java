@@ -54,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
                         fragmentHome();
                         break;
                     case R.id.person:
-                        fragmentPerson();
+                        if (mAuth.getCurrentUser() != null)
+                            fragmentAccount();
+                        else
+                            fragmentPerson();
                         break;
                     default:
                         Toast.makeText(MainActivity.this, "Nada", Toast.LENGTH_SHORT).show();
@@ -82,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    private void fragmentAccount() {
+        Fragment fragment = new AccountFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -99,9 +111,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        fragmentHome();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-            finish();
+            //startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            //finish();
         }
     }
 }

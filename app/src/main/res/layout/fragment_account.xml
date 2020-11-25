@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtBienvenida"
+            android:layout_column="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pantalla de usuario"
+            android:textSize="20dp"/>
+        <Button
+            android:id="@+id/btnSalir"
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/red"
+            android:gravity="right"
+            android:text="@string/btn_salir"/>
+    </LinearLayout>
+
+</FrameLayout>
