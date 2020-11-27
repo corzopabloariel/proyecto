@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +31,7 @@ public class AccountFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private Button btnSalir;
+    private Button btnSalir, btnDatos, btnPublicaciones, btnMensajes;
     private TextView txtBienvenida;
 
     public AccountFragment() {
@@ -63,6 +65,9 @@ public class AccountFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         txtBienvenida = (TextView) view.findViewById(R.id.txtBienvenida);
         btnSalir = (Button) view.findViewById(R.id.btnSalir);
+        btnDatos = (Button) view.findViewById(R.id.btnDatos);
+        btnMensajes = (Button) view.findViewById(R.id.btnMensajes);
+        btnPublicaciones = (Button) view.findViewById(R.id.btnPublicaciones);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -70,6 +75,12 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logout();
+            }
+        });
+        btnPublicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publicaciones();
             }
         });
         getUserInfo();
@@ -83,9 +94,6 @@ public class AccountFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String name = snapshot.child("name").getValue().toString();
-                    String email = snapshot.child("email").getValue().toString();
-                    User user = new User(name, email, snapshot.child("pass").getValue().toString());
-                    user.set_id(id);
                     txtBienvenida.setText(name);
                 }
             }
@@ -100,6 +108,15 @@ public class AccountFragment extends Fragment {
     private void logout() {
         mAuth.signOut();
         startActivity(new Intent(getActivity(), MainActivity.class));
+    }
+
+    private void publicaciones() {
+        Fragment fragment = new PersonFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

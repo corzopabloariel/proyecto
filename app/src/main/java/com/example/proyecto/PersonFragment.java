@@ -64,16 +64,6 @@ public class PersonFragment extends Fragment {
         btnRegistrar = (Button) view.findViewById(R.id.btnRegistrar);
         btnAcceder = (Button) view.findViewById(R.id.btnAcceder);
 
-        getActivity().findViewById(R.id.home).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new FirstFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flFragment, fragment, fragment.getTag())
-                        .commit();
-            }
-        });
         btnAcceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
