@@ -83,11 +83,11 @@ public class PersonFragment extends Fragment {
                 pass = editTextPass.getText().toString();
 
                 if (!name.isEmpty() && !email.isEmpty() && !pass.isEmpty()) {
-                    if (pass.length() >= 6) {
+                    if (pass.length() >= 6 & contieneNumero(pass)) {
                         registrarUsuario();
                     } else {
                         // Detalle de Firebase
-                        Toast.makeText(getActivity(), "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "La contraseña debe tener al menos un numero y 6 caracteres", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
@@ -130,5 +130,18 @@ public class PersonFragment extends Fragment {
                 }
             }
         });
+    }
+    public final boolean contieneNumero(String s) {
+        boolean contieneNumero = false;
+
+        if (s != null && !s.isEmpty()) {
+            for (char c : s.toCharArray()) {
+                if (contieneNumero = Character.isDigit(c)) {
+                    break;
+                }
+            }
+        }
+
+        return contieneNumero;
     }
 }
