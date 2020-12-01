@@ -19,7 +19,7 @@ public class AccessActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPass;
     private String email, pass;
-    private Button btnAcceder;
+    private Button btnAcceder, btnRegistrar;
 
     FirebaseAuth mAuth;
 
@@ -30,10 +30,11 @@ public class AccessActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPass = (EditText) findViewById(R.id.editTextPass);
+        editTextEmail = (EditText) findViewById(R.id.inputEmail);
+        editTextPass = (EditText) findViewById(R.id.inputPass);
 
         btnAcceder = (Button) findViewById(R.id.btnAcceder);
+        btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
 
         btnAcceder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,13 @@ public class AccessActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(AccessActivity.this, "Debe completar los datos", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AccessActivity.this, MainActivity.class));
             }
         });
     }

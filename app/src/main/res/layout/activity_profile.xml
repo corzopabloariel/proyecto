@@ -26,9 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:textColor="@color/red"
+                android:textColor="@color/colorPrimary"
                 android:gravity="right"
-                android:text="@string/btn_salir"/>
+                android:text="@string/salir"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>
