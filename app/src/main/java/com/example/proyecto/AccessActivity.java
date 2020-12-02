@@ -35,7 +35,7 @@ public class AccessActivity extends AppCompatActivity {
 
         btnAcceder = (Button) findViewById(R.id.btnAcceder);
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
-
+        final LodingLogin lodingLogin = new LodingLogin(AccessActivity.this);
         btnAcceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +43,7 @@ public class AccessActivity extends AppCompatActivity {
                 pass = editTextPass.getText().toString();
 
                 if (!email.isEmpty() && !pass.isEmpty()) {
-                    accederUsuario();
+                    accederUsuario(lodingLogin);
                 } else {
                     Toast.makeText(AccessActivity.this, "Debe completar los datos", Toast.LENGTH_SHORT).show();
                 }
@@ -58,10 +58,12 @@ public class AccessActivity extends AppCompatActivity {
         });
     }
 
-    private void accederUsuario() {
+    private void accederUsuario(LodingLogin lodingLogin) {
+        lodingLogin.startLoading();
         mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                lodingLogin.dismissLoading();
                 if (task.isSuccessful()) {
                     startActivity(new Intent(AccessActivity.this, ProfileActivity.class));
                     finish();

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
         btnVolver = (Button) findViewById(R.id.btnVolver);
+        final LodingLogin lodingLogin = new LodingLogin(MainActivity.this);
 
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!name.isEmpty() && !email.isEmpty() && !pass.isEmpty()) {
                     if (pass.length() >= 6) {
-                        registrarUsuario();
+                        registrarUsuario(lodingLogin);
                     } else {
                         // Detalle de Firebase
                         Toast.makeText(MainActivity.this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
@@ -72,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void registrarUsuario() {
+    private void registrarUsuario(LodingLogin lodingLogin) {
+        lodingLogin.startLoading();
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                lodingLogin.dismissLoading();
                 if (task.isSuccessful()) {
                     Map<String, Object> map = new HashMap<>();
 

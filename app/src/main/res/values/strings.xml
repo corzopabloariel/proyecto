@@ -8,4 +8,5 @@
     <string name="volver">Volver</string>
     <string name="alta">Alta</string>
     <string name="salir">Salir</string>
+    <string name="cargando">Cargando ...</string>
 </resources>

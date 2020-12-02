@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void logout() {
         mAuth.signOut();
-        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+        startActivity(new Intent(ProfileActivity.this, AccessActivity.class));
         finish();
     }
 }
