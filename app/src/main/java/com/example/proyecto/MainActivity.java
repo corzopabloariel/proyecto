@@ -31,7 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirstFragment.EscuchaFragmento {
+
+
+        @Override
+        public void alSeleccionarItem(String idArticulo) {
+
+        }
+
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
@@ -68,12 +75,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fragmentHome() {
-        Fragment fragment = new FirstFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flFragment, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flFragment, FirstFragment.crear())
+                .commit();
     }
 
     private void fragmentPerson() {

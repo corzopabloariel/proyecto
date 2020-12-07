@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ServiceFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ServiceFragment"
+    android:background="@drawable/ic_ladrillos">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleService"
+        android:id="@+id/recycleSe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/item_lista_articulos" >
 
     </androidx.recyclerview.widget.RecyclerView>
