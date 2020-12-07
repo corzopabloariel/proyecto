@@ -2,44 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/altura_item"
-    android:orientation="horizontal"
     android:layout_marginTop="@dimen/margen_estandar"
-    android:layout_marginBottom="@dimen/margen_estandar">
+    android:layout_marginBottom="@dimen/margen_estandar"
+    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+    android:orientation="horizontal">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Título"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:id="@+id/titulo"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/miniatura" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resumen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/miniatura"
+        android:text="Título"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <TextView
         android:id="@+id/resumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fecha"
         android:layout_below="@+id/titulo"
         android:layout_alignLeft="@+id/titulo"
         android:layout_alignRight="@+id/titulo"
-        android:layout_above="@+id/fecha" />
+        android:text="Resumen" />
 
     <TextView
+        android:id="@+id/fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha"
-        android:id="@+id/fecha"
         android:layout_alignLeft="@+id/resumen"
         android:layout_alignRight="@+id/titulo"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:text="Fecha"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
     <ImageView
+        android:id="@+id/miniatura"
         android:layout_width="@dimen/ancho_miniatura"
         android:layout_height="match_parent"
-        android:id="@+id/miniatura"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/margen_estandar" />
