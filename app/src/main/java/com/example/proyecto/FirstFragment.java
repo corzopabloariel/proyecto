@@ -1,26 +1,22 @@
 package com.example.proyecto;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.content.Context;
-
-import com.example.proyecto.ModeloArticulos;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.proyecto.adapters.AdaptadorArticulos;
+import com.example.proyecto.adapters.AdaptadorServicio;
+import com.example.proyecto.entity.Categorias;
+import com.example.proyecto.entity.Publicacion;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
-public class FirstFragment extends Fragment implements AdaptadorArticulos.OnItemClickListener {
+public class FirstFragment extends Fragment implements AdaptadorServicio.OnItemClickListener {
 
     private EscuchaFragmento escucha;
 
@@ -55,7 +51,9 @@ public class FirstFragment extends Fragment implements AdaptadorArticulos.OnItem
 
 
     private void prepararLista(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new AdaptadorArticulos(ModeloArticulos.ITEMS, this));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
+        recyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+        recyclerView.setAdapter(new AdaptadorServicio(Categorias.ITEMS, this));
     }
 
     @Override
@@ -76,7 +74,7 @@ public class FirstFragment extends Fragment implements AdaptadorArticulos.OnItem
     }
 
     @Override
-    public void onClick(AdaptadorArticulos.ViewHolder viewHolder, String idArticulo) {
+    public void onClick(AdaptadorServicio.ViewHolder viewHolder, String idArticulo) {
 
     }
 

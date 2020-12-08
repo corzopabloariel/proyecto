@@ -37,6 +37,18 @@
         android:text="Fecha"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
+    <TextView
+        android:id="@+id/fecha2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fecha"
+        android:layout_alignEnd="@id/fecha"
+        android:layout_alignRight="@id/titulo"
+        android:layout_alignBottom="@id/fecha"
+        android:layout_alignParentBottom="true"
+        android:text="Ubicacion"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
     <ImageView
         android:id="@+id/miniatura"
         android:layout_width="@dimen/ancho_miniatura"

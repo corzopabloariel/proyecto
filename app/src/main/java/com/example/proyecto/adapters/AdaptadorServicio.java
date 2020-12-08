@@ -9,39 +9,32 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.proyecto.entity.Categorias;
 import com.example.proyecto.entity.Publicacion;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} que alimenta la lista con
- * instancias {@link Publicacion.Articulo}
- */
-public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.ViewHolder> {
+public class AdaptadorServicio extends RecyclerView.Adapter<AdaptadorServicio.ViewHolder> {
+    private final List<Categorias.Categoria> valores;
 
-    private final List<Publicacion.Articulo> valores;
-
-    public AdaptadorArticulos(List<Publicacion.Articulo> items,
-                              OnItemClickListener escuchaClicksExterna) {
+    public AdaptadorServicio(List<Categorias.Categoria> items,
+                             AdaptadorServicio.OnItemClickListener escuchaClicksExterna) {
         valores = items;
         this.escuchaClicksExterna = escuchaClicksExterna;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdaptadorServicio.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_lista_articulos, parent, false);
+                .inflate(R.layout.item_lista_categorias, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final AdaptadorServicio.ViewHolder holder, int position) {
         holder.item = valores.get(position);
-        holder.viewTitulo.setText(valores.get(position).titulo);
-        holder.viewResumen.setText(valores.get(position).descripcion);
-        holder.viewFecha.setText(valores.get(position).fecha);
+        holder.viewTitulo.setText(valores.get(position).getNombre());
         Glide.with(holder.itemView.getContext())
-                .load(holder.item.urlMiniatura)
+                .load(holder.item.getIcono512())
                 .thumbnail(0.1f)
                 .centerCrop()
                 .into(holder.viewMiniatura);
@@ -57,10 +50,9 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
         }
     }
 
-
-    private String obtenerIdArticulo(int posicion) {
+    private String obtenerIdCategoria(int posicion) {
         if (posicion != RecyclerView.NO_POSITION) {
-            return valores.get(posicion).id;
+            return valores.get(posicion).getId();
         } else {
             return null;
         }
@@ -69,33 +61,33 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         public final TextView viewTitulo;
-        public final TextView viewResumen;
-        public final TextView viewFecha;
         public final ImageView viewMiniatura;
 
-        public Publicacion.Articulo item;
+        public Categorias.Categoria item;
 
         public ViewHolder(View view) {
             super(view);
             view.setClickable(true);
-            viewTitulo = (TextView) view.findViewById(R.id.titulo);
-            viewResumen = (TextView) view.findViewById(R.id.resumen);
-            viewFecha = (TextView) view.findViewById(R.id.fecha);
-            viewMiniatura = (ImageView) view.findViewById(R.id.miniatura);
-
+            viewTitulo = (TextView) view.findViewById(R.id.ctextView);
+            viewMiniatura = (ImageView) view.findViewById(R.id.cimgView);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            escuchaClicksExterna.onClick(this, obtenerIdArticulo(getAdapterPosition()));
+            escuchaClicksExterna.onClick(this, obtenerIdCategoria(getAdapterPosition()));
         }
     }
 
 
     public interface OnItemClickListener {
-        public void onClick(ViewHolder viewHolder, String idArticulo);
+        public void onClick(AdaptadorServicio.ViewHolder viewHolder, String idArticulo);
     }
 
-    private OnItemClickListener escuchaClicksExterna;
+    private AdaptadorServicio.OnItemClickListener escuchaClicksExterna;
 }
+
+
+
+
+

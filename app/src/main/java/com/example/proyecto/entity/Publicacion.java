@@ -1,8 +1,12 @@
-package com.example.proyecto;
+package com.example.proyecto.entity;
+
+import android.content.ContentValues;
 
 import androidx.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +15,7 @@ import java.util.UUID;
 /**
  * Modelo de datos para los artículos que se inflarán en la lista
  */
-public class ModeloArticulos {
+public class Publicacion {
 
     /**
      * Arreglo de objetos {@link Articulo} que simula una fuente de datos
@@ -24,11 +28,14 @@ public class ModeloArticulos {
     public static final Map<String, Articulo> MAPA_ITEMS = new HashMap<String, Articulo>();
 
     static {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
+        Date date = new Date();
+        String fechita=dateFormat.format(date);
+        ContentValues values= new ContentValues();
         // Añadir elementos de ejemplo
         agregarItem(new Articulo(generarId(),
                 "10 Plantillas Para Determinar Tus Necesidades Calóricas",
-                "Descarga nuestras plantillas para Microsoft Excel que te permitirán, calcular exactamente...",
-                "10 de Enero", "https://www.develou.com/wp-content/uploads/2016/01/articulo1.jpg"));
+                "Descarga nuestras plantillas para Microsoft Excel que te permitirán, calcular exactamente...", fechita, "https://firebasestorage.googleapis.com/v0/b/proyecto-app-1954e.appspot.com/o/publicaciones%2Ftubing-2672187_640.jpg?alt=media&token=157da151-c2b9-46ed-944f-11d3ebc10a16"));
         agregarItem(new Articulo(generarId(),
                 "¿Qué Tan Malo Es Consumir Chocolate?",
                 "Si aún no has podido resolver tus dudas sobre comer chocolate, entonces este artículo es para ti...",
@@ -60,7 +67,7 @@ public class ModeloArticulos {
         agregarItem(new Articulo(generarId(),
                 "Las 30 Razones De Por Qué Superman Come Cacahuates",
                 "Los frutos secos han sido desde la antiguedad la principal fuente de proteínas para muchas civilizaciones...",
-                "18 de Enero", "https://www.develou.com/wp-content/uploads/2016/01/articulo9.jpg"));
+                "18 de Enero", "https://firebasestorage.googleapis.com/v0/b/proyecto-app-1954e.appspot.com/o/iconos%2Fpintura.png?alt=media&token=d343d2d7-f2cb-473f-967d-20ce8fa2b329"));
 
     }
 
@@ -87,6 +94,8 @@ public class ModeloArticulos {
 
         public final String descripcion;
 
+       // public final String latitud;
+     //   public final String longitud;
         public final String fecha;
 
         public final String urlMiniatura;
