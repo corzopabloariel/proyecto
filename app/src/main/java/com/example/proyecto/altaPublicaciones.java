@@ -29,11 +29,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.proyecto.entity.Publicacion;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,7 +71,7 @@ public class altaPublicaciones extends AppCompatActivity {
     final int PERMISSIONS_REQUEST_CAMERA = 9;
     private LocationManager ubicacion;
     static final int REQUEST_TAKE_PHOTO = 1;
-    private static final String STRING_PREFERENCES = "sanapruebados.entidades.Usuario";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,6 +185,7 @@ public class altaPublicaciones extends AppCompatActivity {
             String desc="descripcion";
             publica=new Publicacion.Articulo(desc,fecha,img,latitud,longitud,usu,titulo);
             // mDatabase.child("publicacion").push();
+
             DatabaseReference postsRef = mDatabase.getReference().child("publicaciones");
             DatabaseReference newPostRef = postsRef.push();
             newPostRef.setValue(publica);
@@ -189,7 +193,6 @@ public class altaPublicaciones extends AppCompatActivity {
             estado.setText("");
             imagen.setImageResource(R.mipmap.ic_launcher);
             Toast.makeText(getApplicationContext(), "AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-
             estado.setText("");
             imagen.setImageResource(R.mipmap.ic_launcher);
         } catch (Exception e) {
@@ -204,11 +207,6 @@ public class altaPublicaciones extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
 
-    }
-
-    public int obtenerUsuarioLogueado() {
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, Context.MODE_PRIVATE);
-        return preferences.getInt("id", 7);
     }
 
     private File createImageFile() throws IOException {
@@ -313,7 +311,23 @@ public class altaPublicaciones extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] dato = baos.toByteArray();
+                Log.d("aa",mDatabase.getReference().child("publicaciones").toString());
+                Log.d("aaaa",photoURI.toString());
+
                 StorageReference publicaRef = mStorageRef.child("images/publicacion"+ photoURI.toString()+".jpg");
+              UploadTask uploadTask=publicaRef.putBytes(dato);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                       // Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    }
+                });
                 publicaRef.putBytes(dato);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
