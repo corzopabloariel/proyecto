@@ -75,7 +75,6 @@ public class AccessFragment extends Fragment {
             public void onClick(View v) {
                 email = editTextEmail.getText().toString();
                 pass = editTextPass.getText().toString();
-
                 if (!email.isEmpty() && !pass.isEmpty()) {
                     accederUsuario();
                 } else {

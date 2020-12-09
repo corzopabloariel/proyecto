@@ -7,16 +7,8 @@
     tools:context=".PublicacionFragment"
     android:background="@drawable/ic_ladrillos">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:src="@mipmap/ic_launcher_foreground"
-        android:textAlignment="center" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleSe"
+        android:id="@+id/recycleSen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"

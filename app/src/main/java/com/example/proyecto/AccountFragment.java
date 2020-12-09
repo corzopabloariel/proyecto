@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.proyecto.entity.DialogoIdioma;
-import com.example.proyecto.entity.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,11 +27,11 @@ import com.google.firebase.database.ValueEventListener;
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment  {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private Button btnSalir, btnDatos, btnPublicaciones, btnMensajes;
+    private Button btnSalir, btnDatos, btnPublicaciones, btnAlta;
     private TextView txtBienvenida;
 
     public AccountFragment() {
@@ -69,10 +66,16 @@ public class AccountFragment extends Fragment {
         txtBienvenida = (TextView) view.findViewById(R.id.txtBienvenida);
         btnSalir = (Button) view.findViewById(R.id.btnSalir);
         btnDatos = (Button) view.findViewById(R.id.btnDatos);
-        btnMensajes = (Button) view.findViewById(R.id.btnMensajes);
+        btnAlta = (Button) view.findViewById(R.id.btnAlta);
         btnPublicaciones = (Button) view.findViewById(R.id.btnPublicaciones);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        btnPublicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publicaciones();
+            }
+        });
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -88,10 +91,10 @@ public class AccountFragment extends Fragment {
                 logout();
             }
         });
-        btnPublicaciones.setOnClickListener(new View.OnClickListener() {
+        btnAlta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                publicaciones();
+                altaPublicaciones();
             }
         });
         getUserInfo();
@@ -121,9 +124,18 @@ public class AccountFragment extends Fragment {
         startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
-    private void publicaciones() {
+    private void altaPublicaciones() {
         Intent intent = new Intent(getActivity(), altaPublicaciones.class);
         startActivity(intent);
+    }
+
+    private void publicaciones() {
+        Fragment fragment = new PublicacionFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 

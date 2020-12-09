@@ -21,12 +21,17 @@ import com.example.proyecto.entity.Publicacion;
  */
 public class PublicacionFragment extends Fragment implements AdaptadorArticulos.OnItemClickListener {
 
-    private EscuchaFragmento escucha;
+
 
     public PublicacionFragment() {
 
     }
-
+    public static PublicacionFragment newInstance(String param1, String param2) {
+        PublicacionFragment fragment = new PublicacionFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
     public static PublicacionFragment crear() {
         return new PublicacionFragment();
     }
@@ -42,9 +47,9 @@ public class PublicacionFragment extends Fragment implements AdaptadorArticulos.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_first, container, false);
+        View v = inflater.inflate(R.layout.fragmen_public, container, false);
 
-        View recyclerView = v.findViewById(R.id.recycleSe);
+        View recyclerView = v.findViewById(R.id.recycleSen);
 
         //assert recyclerView != null;
         prepararLista((RecyclerView) recyclerView);
@@ -57,29 +62,12 @@ public class PublicacionFragment extends Fragment implements AdaptadorArticulos.
         recyclerView.setAdapter(new AdaptadorArticulos(Publicacion.ITEMS, this));
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof EscuchaFragmento) {
-            escucha = (EscuchaFragmento) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " debes implementar EscuchaFragmento");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        escucha = null;
-    }
 
     @Override
     public void onClick(AdaptadorArticulos.ViewHolder viewHolder, String idArticulo) {
 
     }
 
-    public interface EscuchaFragmento {
-        void alSeleccionarItem(String idArticulo);
-    }
+
 }

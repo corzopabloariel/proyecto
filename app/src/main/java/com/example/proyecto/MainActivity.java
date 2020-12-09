@@ -17,13 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements FirstFragment.EscuchaFragmento {
+public class MainActivity extends AppCompatActivity  {
 
 
-        @Override
-        public void alSeleccionarItem(String idArticulo) {
 
-        }
 
 
     private FirebaseAuth mAuth;
@@ -36,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Esc
 
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
-        fragmentHome();
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

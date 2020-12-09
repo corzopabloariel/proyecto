@@ -18,7 +18,7 @@ import com.example.proyecto.entity.Publicacion;
 
 public class FirstFragment extends Fragment implements AdaptadorServicio.OnItemClickListener {
 
-    private EscuchaFragmento escucha;
+
 
     public FirstFragment() {
 
@@ -54,31 +54,15 @@ public class FirstFragment extends Fragment implements AdaptadorServicio.OnItemC
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
         recyclerView.setAdapter(new AdaptadorServicio(Categorias.ITEMS, this));
+
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof EscuchaFragmento) {
-            escucha = (EscuchaFragmento) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " debes implementar EscuchaFragmento");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        escucha = null;
-    }
 
     @Override
     public void onClick(AdaptadorServicio.ViewHolder viewHolder, String idArticulo) {
 
     }
 
-    public interface EscuchaFragmento {
-        void alSeleccionarItem(String idArticulo);
-    }
+
 }

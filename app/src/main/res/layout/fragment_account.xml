@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@android:color/transparent"
-            android:text="Cambiar Idioma"
+            android:text="@string/cambiar_idioma"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark" />
         <Button
@@ -36,16 +36,16 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
-            android:text="Mis publicaciones"/>
+            android:text="@string/mis_publicaciones"/>
         <Button
-            android:id="@+id/btnMensajes"
+            android:id="@+id/btnAlta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
-            android:text="Mensajes"/>
+            android:text="@string/subir_publicacion"/>
         <Button
             android:id="@+id/btnSalir"
             android:layout_width="match_parent"

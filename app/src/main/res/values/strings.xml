@@ -9,6 +9,10 @@
     <string name="btn_salir">Salir</string>
     <string name="title_home">Inicio</string>
     <string name="title_cuenta">Mi cuenta</string>
+    <string name="title_mapa">Mapa</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="subir_publicacion">Subir publicacion</string>
+    <string name="mis_publicaciones">Mis publicaciones</string>
+    <string name="cambiar_idioma">Cambiar Idioma</string>
 </resources>
