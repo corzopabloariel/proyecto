@@ -18,5 +18,12 @@
         tools:listitem="@layout/item_lista_articulos" >
 
     </androidx.recyclerview.widget.RecyclerView>
-/
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="86dp"
+        android:layout_height="98dp"
+        android:layout_gravity="center_horizontal"
+        tools:src="@tools:sample/avatars" />
+    /
 </FrameLayout>

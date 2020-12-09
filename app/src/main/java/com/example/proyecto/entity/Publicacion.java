@@ -1,14 +1,18 @@
 package com.example.proyecto.entity;
 
 import android.content.ContentValues;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.proyecto.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,26 +39,52 @@ public class Publicacion {
 
 
     public static final Map<String, Articulo> MAPA_ITEMS = new HashMap<String, Articulo>();
+
 static {
+    Articulo publicaC = new Articulo("De prueba", "fecha", "imagen", "latitud","longitud", "User","Tarjeta");
+    agregarItem(publicaC);
+    FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    DatabaseReference mDatabase;
     mDatabase=FirebaseDatabase.getInstance().getReference();
+  FirebaseDatabase.getInstance().getReference().child("publicacion")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.d("tag","Children" + dataSnapshot.getKey());
+
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                String usuarioactual=mAuth.getUid();
+                Log.d("taaag",usuarioactual);
+                String provedor=(String) snapshot.child("proveedor").getValue();
+                Log.d("provedor",provedor);
+                //traigo todos porque no funca esto
+                if (usuarioactual== usuarioactual){
+                    Log.d("entre en if",provedor);
+                    String descripcion=(String) snapshot.child("descripcion").getValue();
+                    String titulo= (String) snapshot.child("titulo").getValue();
+                    String img= (String) snapshot.child("img").getValue();
+                    String latitud=(String)snapshot.child("latitud").getValue();
+                    String longitud=(String)snapshot.child("longitud").getValue();
+                    String fecha=(String)snapshot.child("fecha").getValue();
+                    Articulo publica = new Articulo(descripcion, fecha, img, latitud,longitud, usuarioactual,titulo);
+                    Log.d("publica",descripcion+titulo+img+latitud+longitud+fecha);
+                    agregarItem(publica);}
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+        }
+    });
+    /*mDatabase=FirebaseDatabase.getInstance().getReference();
     SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
     Date date = new Date();
     String fechita = dateFormat.format(date);
     String usu = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    Articulo publica = new Articulo("Probando1", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "1");
-    agregarItem(publica);
-    Articulo publica2 = new Articulo("Probando2", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "2");
-    agregarItem(publica);
-    Articulo publica3 = new Articulo("Probando3", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "3");
-    agregarItem(publica);
-    agregarItem(publica2);
-    agregarItem(publica3);
 
-    // mDatabase.child("publicacion").push();
-    DatabaseReference postsRef = mDatabase.child("publicaciones");
-    DatabaseReference newPostRef = postsRef.push();
-    newPostRef.setValue(publica);
+    */
 }
+
 
     private static void agregarItem(Articulo item) {
         ITEMS.add(item);
