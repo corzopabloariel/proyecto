@@ -186,7 +186,7 @@ public class altaPublicaciones extends AppCompatActivity {
             publica=new Publicacion.Articulo(desc,fecha,img,latitud,longitud,usu,titulo);
             // mDatabase.child("publicacion").push();
 
-            DatabaseReference postsRef = mDatabase.getReference().child("publicaciones");
+            DatabaseReference postsRef = mDatabase.getReference().child("publicacion");
             DatabaseReference newPostRef = postsRef.push();
             newPostRef.setValue(publica);
             Toast.makeText(getApplicationContext(), "AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
@@ -311,7 +311,7 @@ public class altaPublicaciones extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] dato = baos.toByteArray();
-                Log.d("aa",mDatabase.getReference().child("publicaciones").toString());
+                Log.d("aa",mDatabase.getReference().child("publicacione").toString());
                 Log.d("aaaa",photoURI.toString());
 
                 StorageReference publicaRef = mStorageRef.child("images/publicacion"+ photoURI.toString()+".jpg");

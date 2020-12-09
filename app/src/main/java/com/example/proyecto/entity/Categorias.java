@@ -50,10 +50,14 @@ public class Categorias {
                         Log.d("tag","Children" + dataSnapshot.getKey());
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            //Categoria categoria = snapshot.getValue(Categoria.class);
+                            Log.d("clase de categoria",snapshot.getValue().toString());
                             String nombre= (String) snapshot.child("nombre").getValue();
                             String url= (String) snapshot.child("icono512").getValue();
                             String imgToolbar=(String)snapshot.child("imgToolbar").getValue();
                             Categoria categoria=new Categoria(nombre,url,snapshot.getKey(),imgToolbar);
+                          // categoria.setID(snapshot.getKey());
+                          //  Log.d("idcategoria",snapshot.getKey());
                            agregarItem(categoria);
                         }
                     }
