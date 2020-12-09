@@ -1,8 +1,14 @@
 package com.example.proyecto.entity;
 
 import android.content.ContentValues;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.example.proyecto.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,21 +31,30 @@ public class Publicacion {
     /**
      * Mapa simulador de búsquedas de articulos por id
      */
+    static DatabaseReference mDatabase;
+
+
     public static final Map<String, Articulo> MAPA_ITEMS = new HashMap<String, Articulo>();
+static {
+    mDatabase=FirebaseDatabase.getInstance().getReference();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
+    Date date = new Date();
+    String fechita = dateFormat.format(date);
+    String usu = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    Articulo publica = new Articulo("Probando1", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "1");
+    agregarItem(publica);
+    Articulo publica2 = new Articulo("Probando2", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "2");
+    agregarItem(publica);
+    Articulo publica3 = new Articulo("Probando3", fechita, "https://kuzudecoletaje.es/wp-content/uploads/2016/06/la_importancia_de_medir.jpg", "41.40338", "41.40338", usu, "3");
+    agregarItem(publica);
+    agregarItem(publica2);
+    agregarItem(publica3);
 
-////////////////////////////////////////////////////
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
-        Date date = new Date();
-        String fechita=dateFormat.format(date);
-        ///////////////////////////////////////////////////////
-    //enzooooooo asi podesp oner la fecha actual en que se creo la publicacion ////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-
-
-    //////////////////////////////////////////////////////////////////
-    ///para el valor del proveedor tenes que tener una referencia al a base de Firebase como en la clase personafragment
-    ///y poner lo siguiente mAuth.getCurrentUser().getUid() esto te da el id del usuario que esta logueado, el que va a subir la publi////
-
+    // mDatabase.child("publicacion").push();
+    DatabaseReference postsRef = mDatabase.child("publicaciones");
+    DatabaseReference newPostRef = postsRef.push();
+    newPostRef.setValue(publica);
+}
 
     private static void agregarItem(Articulo item) {
         ITEMS.add(item);

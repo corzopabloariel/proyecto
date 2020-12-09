@@ -111,12 +111,8 @@ public class AccountFragment extends Fragment {
     }
 
     private void publicaciones() {
-        Fragment fragment = new altaPublicaciones();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flFragment, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        Intent intent = new Intent(getActivity(), altaPublicaciones.class);
+        startActivity(intent);
     }
 
 
