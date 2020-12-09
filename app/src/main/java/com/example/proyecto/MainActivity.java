@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Esc
                         else
                             fragmentPerson();
                         break;
+                    case R.id.map:
+                        Toast.makeText(MainActivity.this, "mapa", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         Toast.makeText(MainActivity.this, "Nada", Toast.LENGTH_SHORT).show();
                 }
