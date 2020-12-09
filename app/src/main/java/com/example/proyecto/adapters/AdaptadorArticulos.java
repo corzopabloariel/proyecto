@@ -37,11 +37,11 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = valores.get(position);
-        holder.viewTitulo.setText(valores.get(position).titulo);
-        holder.viewResumen.setText(valores.get(position).descripcion);
-        holder.viewFecha.setText(valores.get(position).fecha);
+        holder.viewTitulo.setText(valores.get(position).getTitulo());
+        holder.viewResumen.setText(valores.get(position).getDescripcion());
+        holder.viewFecha.setText(valores.get(position).getFecha());
         Glide.with(holder.itemView.getContext())
-                .load(holder.item.urlMiniatura)
+                .load(holder.item.getImg())
                 .thumbnail(0.1f)
                 .centerCrop()
                 .into(holder.viewMiniatura);
@@ -60,7 +60,7 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
 
     private String obtenerIdArticulo(int posicion) {
         if (posicion != RecyclerView.NO_POSITION) {
-            return valores.get(posicion).id;
+            return valores.get(posicion).getId();
         } else {
             return null;
         }
