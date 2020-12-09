@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +56,8 @@ public class PersonFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        mAuth=FirebaseAuth.getInstance();
+        mDataBase= FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -85,6 +90,7 @@ public class PersonFragment extends Fragment {
 
                 if (!name.isEmpty() && !email.isEmpty() && !pass.isEmpty()) {
                     if (pass.length() >= 6 & contieneNumero(pass)) {
+
                         registrarUsuario();
                     } else {
                         // Detalle de Firebase
@@ -100,15 +106,17 @@ public class PersonFragment extends Fragment {
 
     private void registrarUsuario() {
         User user = new User(name, email, pass);
-        mAuth=FirebaseAuth.getInstance();
+
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                  //  FirebaseUser userr =FirebaseAuth.getInstance().getCurrentUser() ;
                     Map<String, Object> map = new HashMap<>();
                     map.put("name", name);
                     map.put("email", email);
                     map.put("pass", pass);
+                    mAuth.signInWithEmailAndPassword(email, pass);
                     String id = mAuth.getCurrentUser().getUid();
                     user.set_id(id);
                     mDataBase.child("users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

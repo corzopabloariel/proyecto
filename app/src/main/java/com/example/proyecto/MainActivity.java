@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Esc
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flFragment, FirstFragment.crear())
+                //.addToBackStack(null)
                 .commit();
     }
 
