@@ -51,6 +51,7 @@ public class PersonFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -99,6 +100,7 @@ public class PersonFragment extends Fragment {
 
     private void registrarUsuario() {
         User user = new User(name, email, pass);
+        mAuth=FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -107,7 +109,6 @@ public class PersonFragment extends Fragment {
                     map.put("name", name);
                     map.put("email", email);
                     map.put("pass", pass);
-
                     String id = mAuth.getCurrentUser().getUid();
                     user.set_id(id);
                     mDataBase.child("users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

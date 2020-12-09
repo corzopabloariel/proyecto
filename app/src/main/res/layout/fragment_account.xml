@@ -18,15 +18,16 @@
             android:layout_height="wrap_content"
             android:text="Pantalla de usuario"
             android:textSize="20dp"/>
+
         <Button
             android:id="@+id/btnDatos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:text="Cambiar Idioma"
             android:textAlignment="center"
-            android:text="Mis datos"/>
+            android:textColor="@color/colorPrimaryDark" />
         <Button
             android:id="@+id/btnPublicaciones"
             android:layout_width="match_parent"

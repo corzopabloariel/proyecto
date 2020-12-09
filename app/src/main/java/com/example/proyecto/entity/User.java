@@ -1,19 +1,7 @@
 package com.example.proyecto.entity;
 
-import android.content.Intent;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.proyecto.ProfileActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class User {
     private String _id;

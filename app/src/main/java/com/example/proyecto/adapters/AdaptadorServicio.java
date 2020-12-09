@@ -35,8 +35,6 @@ public class AdaptadorServicio extends RecyclerView.Adapter<AdaptadorServicio.Vi
         holder.viewTitulo.setText(valores.get(position).getNombre());
         Glide.with(holder.itemView.getContext())
                 .load(holder.item.getIcono512())
-                .thumbnail(0.1f)
-                .centerCrop()
                 .into(holder.viewMiniatura);
 
     }

@@ -119,12 +119,5 @@ public class AccountFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() == null) {
-            startActivity(new Intent(getActivity(), ProfileActivity.class));
-            getActivity().finish();
-        }
-    }
+
 }

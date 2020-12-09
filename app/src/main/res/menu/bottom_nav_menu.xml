@@ -10,4 +10,9 @@
         android:id="@+id/person"
         android:title="@string/title_cuenta"
         android:icon="@drawable/ic_person_foreground"/>
+    <item
+        android:id="@+id/map"
+        android:title="@string/title_cuenta"
+        android:icon="@drawable/ic_baseline_location_on_24"/>
+
 </menu>
