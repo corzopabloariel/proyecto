@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.proyecto.entity.Categorias;
+import com.example.proyecto.entity.Publicacion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +42,8 @@ private boolean tablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Publicacion.cargarPublicaciones();
+        Categorias.cargarcategorias();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

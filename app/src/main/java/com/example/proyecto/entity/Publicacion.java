@@ -40,7 +40,7 @@ public class Publicacion {
 
     public static final Map<String, Articulo> MAPA_ITEMS = new HashMap<String, Articulo>();
 
-static {
+public static void cargarPublicaciones() {
     Articulo publicaC = new Articulo("De prueba", "fecha", "imagen", "latitud","longitud", "User","Tarjeta");
     agregarItem(publicaC);
     FirebaseAuth mAuth=FirebaseAuth.getInstance();

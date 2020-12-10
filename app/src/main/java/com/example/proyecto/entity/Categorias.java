@@ -39,8 +39,7 @@ public class Categorias {
     */
 
 
-
-    static {
+    public static void cargarcategorias(){
         FirebaseAuth mAuth;
         DatabaseReference mDatabase;
         mDatabase=FirebaseDatabase.getInstance().getReference();

@@ -8,7 +8,9 @@ import android.util.Log;
 
 import androidx.fragment.app.DialogFragment;
 
+
 public class DialogoIdioma extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

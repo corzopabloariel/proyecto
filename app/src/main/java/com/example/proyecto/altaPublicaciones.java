@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,7 +32,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.proyecto.entity.DialogoFoto;
+import com.example.proyecto.entity.DialogoIdioma;
 import com.example.proyecto.entity.Publicacion;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,102 +56,60 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
-import static android.app.Activity.RESULT_OK;
-
 public class altaPublicaciones extends AppCompatActivity {
-    private Uri photoURI;
-     FirebaseDatabase mDatabase ;
-    private StorageReference mStorageRef;
+
+    //Referencia a la base de datos
+    FirebaseStorage storage;
+    FirebaseDatabase mDatabase ;
+    StorageReference mStorageRef;
+
+    //Recursos obtenidos de los permisos
+    Uri photoURI;
     private String latid,longt,direct;
+    private String currentPhotoPath = "";
+    private LocationManager ubicacion;
+
+    //Recursos de la actividad
     private Button bseleccion, bguardar;
-    private EditText estado;
+    private EditText titulo;
+    private EditText descripcion;
     private ImageView imagen;
+    public static boolean desdecamara=false;
+
+    final String url="test";
     final int REQUEST_CODE_GALLERY = 999;
     final int COD_FOTO = 10;
-    private String currentPhotoPath = "";
     final int PERMISSIONS_REQUEST_CAMERA = 9;
-    private LocationManager ubicacion;
     static final int REQUEST_TAKE_PHOTO = 1;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_publicaciones);
+        //Referencia a una instancia firebase
         mDatabase=FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        storage = FirebaseStorage.getInstance();
+
         imagen = (ImageView) findViewById(R.id.IMCamara);
-        estado = (EditText) findViewById(R.id.ETEstado);
+        titulo = (EditText) findViewById(R.id.ETtitulo);
+        descripcion=(EditText)findViewById(R.id.ETDescrip);
         bseleccion = (Button) findViewById(R.id.BTSImagen);
         bguardar = (Button) findViewById(R.id.BTGuardar);
         bseleccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CargarImagen();
-            }
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        DialogoFoto dialogo = new DialogoFoto();
+                        dialogo.show(fragmentManager, "tagAlerta");
 
-            private void CargarImagen() {
-                final CharSequence[] opciones = {"Tomar Foto", "Cargar Imagen", "Cancelar"};
-                final AlertDialog.Builder alertopciones = new AlertDialog.Builder(altaPublicaciones.this);
-                alertopciones.setTitle("Seleccione una Opción");
-                alertopciones.setItems(opciones, (new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (opciones[which].equals("Tomar Foto")) {
+                if (desdecamara==true) {
+                    TomarFoto();
+                    desdecamara=false;
+                    dialogo.dismiss();
 
-                            /*   PERMISOS PARA CAMARA Y ALMACENAMIENTO*/
-
-                            if (ContextCompat.checkSelfPermission(altaPublicaciones.this,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                    != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(altaPublicaciones.this,
-                                    Manifest.permission.CAMERA)
-                                    != PackageManager.PERMISSION_GRANTED) {
-
-
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(altaPublicaciones.this,
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-                                } else {
-                                    ActivityCompat.requestPermissions(altaPublicaciones.this,
-                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                            225);
-                                }
-
-
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(altaPublicaciones.this,
-                                        Manifest.permission.CAMERA)) {
-
-                                } else {
-                                    ActivityCompat.requestPermissions(altaPublicaciones.this,
-                                            new String[]{Manifest.permission.CAMERA},
-                                            226);
-                                }
-                            } else {
-
-                                /*FUNCION TOMAR FOTO*/
-
-                                TomarFoto();
-                            }
-
-                            Toast.makeText(getApplicationContext(), "Tomar Foto", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (opciones[which].equals("Cargar Imagen")) {
-                                ActivityCompat.requestPermissions(altaPublicaciones.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
-
-
-                                Toast.makeText(getApplicationContext(), "Cargar Imagen", Toast.LENGTH_SHORT).show();
-                            } else {
-                                dialog.dismiss();
-                            }
-                        }
-                    }
                 }
-
-
-                ));
-                alertopciones.show();
-            }
-
+                    }
 
         });
         //GEOLOCALIZACION
@@ -173,28 +133,43 @@ public class altaPublicaciones extends AppCompatActivity {
     private void regPublicacion() {
         try {
             Publicacion.Articulo publica;
-            //OBTENGO SHARED PREFERENCE DEL USUARIO GUARDADO
             String usu = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            String titulo=estado.getText().toString();
+            String titul=titulo.getText().toString();
+            String descrip=descripcion.getText().toString();
             String latitud=latid;
             String longitud=longt;
-            String img="testeo";
+            String img;
+          /*  StorageReference storageRef = storage.getReference();
+            StorageReference gsReference = storageRef.child("/images/publicacioncontent:/media/external/images/media/"+ photoURI.toString()+".jpg");
+         storageRef.child("/images/publicacioncontent:/media/external/images/media/"+ photoURI.toString()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+
+         {
+                @Override
+                public void onSuccess(Uri uri) {
+                    url =uri.toString();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    url="error";
+                }
+            });*/
+            img=url;
             SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
             Date date = new Date();
+            File localFile = File.createTempFile("images", "jpg");
             String fecha=dateFormat.format(date);
-            String desc="descripcion";
-            publica=new Publicacion.Articulo(desc,fecha,img,latitud,longitud,usu,titulo);
+            publica=new Publicacion.Articulo(descrip,fecha,img,latitud,longitud,usu,titul);
             // mDatabase.child("publicacion").push();
 
             DatabaseReference postsRef = mDatabase.getReference().child("publicacion");
             DatabaseReference newPostRef = postsRef.push();
             newPostRef.setValue(publica);
             Toast.makeText(getApplicationContext(), "AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-            estado.setText("");
+            titulo.setText("");
+            descripcion.setText("");
             imagen.setImageResource(R.mipmap.ic_launcher);
-            Toast.makeText(getApplicationContext(), "AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-            estado.setText("");
-            imagen.setImageResource(R.mipmap.ic_launcher);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -261,7 +236,7 @@ public class altaPublicaciones extends AppCompatActivity {
     }
 
 
-    private void TomarFoto() {
+    public  void TomarFoto() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
