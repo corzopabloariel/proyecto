@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.proyecto.entity.DialogoIdioma;
+import com.example.proyecto.entity.Publicacion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -80,6 +81,7 @@ public class AccountFragment extends Fragment  {
             @Override
 
                 public void onClick(View v) {
+
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     DialogoIdioma dialogo = new DialogoIdioma();
                     dialogo.show(fragmentManager, "tagAlerta");
@@ -130,6 +132,7 @@ public class AccountFragment extends Fragment  {
     }
 
     private void publicaciones() {
+        Publicacion.cargarPublicaciones(mAuth.getUid());
         Fragment fragment = new PublicacionFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

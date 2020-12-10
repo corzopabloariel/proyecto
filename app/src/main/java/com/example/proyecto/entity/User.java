@@ -3,12 +3,16 @@ package com.example.proyecto.entity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Map;
+
 public class User {
+
     private String _id;
     private String _name;
     private String _email;
     private String _pass;
     private Integer _dni;
+    private Map<String, Object> servicio;
     private boolean _isAdmin;
     private FirebaseAuth _mAuth;
     private DatabaseReference _mDataBase;
@@ -44,6 +48,7 @@ public class User {
     }
     public boolean is_isAdmin() {
         return _isAdmin;
+
     }
 
     /* SETTERS */

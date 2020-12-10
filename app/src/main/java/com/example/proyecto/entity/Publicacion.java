@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.proyecto.MainActivity;
 import com.example.proyecto.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,25 +41,23 @@ public class Publicacion {
 
     public static final Map<String, Articulo> MAPA_ITEMS = new HashMap<String, Articulo>();
 
-public static void cargarPublicaciones() {
+public static void cargarPublicaciones(String uid) {
     Articulo publicaC = new Articulo("De prueba", "fecha", "imagen", "latitud","longitud", "User","Tarjeta");
     agregarItem(publicaC);
-    FirebaseAuth mAuth=FirebaseAuth.getInstance();
     DatabaseReference mDatabase;
     mDatabase=FirebaseDatabase.getInstance().getReference();
-  FirebaseDatabase.getInstance().getReference().child("publicacion")
+    FirebaseDatabase.getInstance().getReference().child("publicacion")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             Log.d("tag","Children" + dataSnapshot.getKey());
 
             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                String usuarioactual=mAuth.getUid();
+                String usuarioactual= uid;
                 Log.d("taaag",usuarioactual);
                 String provedor=(String) snapshot.child("proveedor").getValue();
                 Log.d("provedor",provedor);
-                //traigo todos porque no funca esto
-                if (usuarioactual== usuarioactual){
+                if (usuarioactual.equals(provedor)){
                     Log.d("entre en if",provedor);
                     String descripcion=(String) snapshot.child("descripcion").getValue();
                     String titulo= (String) snapshot.child("titulo").getValue();
@@ -84,7 +83,9 @@ public static void cargarPublicaciones() {
 
     */
 }
-
+    public static void limpiarpublicaciones(){
+        ITEMS.clear();
+    }
 
     private static void agregarItem(Articulo item) {
         ITEMS.add(item);

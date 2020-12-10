@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,34 +16,31 @@ import android.widget.Toast;
 
 import com.example.proyecto.entity.Categorias;
 import com.example.proyecto.entity.Publicacion;
+import com.example.proyecto.entity.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements FragmentoDetalleCategoria.EscuchaFragmento ,FirstFragment.EscuchaFragmento {
+public class MainActivity extends AppCompatActivity implements FragmentoDetalleCategoria.EscuchaFragmento2 ,FirstFragment.EscuchaFragmento {
 private boolean tablet;
         public static String idServicio="1";
+        public static String uid="id";
         @Override
             public void alSeleccionarItem(String idArticulo) {
-                /*if (dosPaneles) {
-                    cargarFragmentoDetalle(idArticulo);
-                } else {*/
                     idServicio =idArticulo;
+                    Usuario.limpiarusuarios();
+                    Usuario.Cargarusuarios();
                     fragmentDetalle();
 
                 }
-
-
-
-
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Publicacion.cargarPublicaciones();
+
         Categorias.cargarcategorias();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -113,6 +111,15 @@ private boolean tablet;
         fragmentTransaction.commit();
     }
 
+    private void publicaciones() {
+        Publicacion.cargarPublicaciones(uid);
+        Fragment fragment = new PublicacionFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -135,5 +142,14 @@ private boolean tablet;
             //startActivity(new Intent(MainActivity.this, ProfileActivity.class));
             //finish();
         }
+    }
+
+    @Override
+    public void alSeleccionarItem2(String idArticulo) {
+        uid=idArticulo;
+        Usuario.limpiarusuarios();
+        Usuario.Cargarusuarios();
+        publicaciones();
+
     }
 }

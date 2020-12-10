@@ -25,7 +25,7 @@ import com.example.proyecto.entity.Usuario;
 public class FragmentoDetalleCategoria extends Fragment implements AdaptadorUsuario.OnItemClickListener {
     // EXTRA
     public static final String ID_ARTICULO = "extra.idArticulo";
-    private EscuchaFragmento escucha;
+    private EscuchaFragmento2 escucha;
 
     private Categorias.Categoria itemDetallado;
     public FragmentoDetalleCategoria() {
@@ -67,8 +67,8 @@ public class FragmentoDetalleCategoria extends Fragment implements AdaptadorUsua
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof EscuchaFragmento) {
-            escucha = (EscuchaFragmento) context;
+        if (context instanceof EscuchaFragmento2) {
+            escucha = (EscuchaFragmento2) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " debes implementar EscuchaFragmento");
@@ -85,7 +85,8 @@ public class FragmentoDetalleCategoria extends Fragment implements AdaptadorUsua
     public void onClick(AdaptadorUsuario.ViewHolder viewHolder, String idArticulo) {
 
     }
-    public interface EscuchaFragmento {
-        void alSeleccionarItem(String idArticulo);
+
+    public interface EscuchaFragmento2 {
+        void alSeleccionarItem2(String idArticulo);
     }
 }

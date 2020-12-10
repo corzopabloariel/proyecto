@@ -48,7 +48,6 @@ public class Categorias {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Log.d("tag","Children" + dataSnapshot.getKey());
-
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             //Categoria categoria = snapshot.getValue(Categoria.class);
                             Log.d("clase de categoria",snapshot.getValue().toString());

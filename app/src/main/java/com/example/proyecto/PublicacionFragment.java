@@ -21,7 +21,7 @@ import com.example.proyecto.entity.Publicacion;
  */
 public class PublicacionFragment extends Fragment implements AdaptadorArticulos.OnItemClickListener {
 
-
+    //private EscuchaFragmento2 escucha;
 
     public PublicacionFragment() {
 
@@ -62,12 +62,18 @@ public class PublicacionFragment extends Fragment implements AdaptadorArticulos.
         recyclerView.setAdapter(new AdaptadorArticulos(Publicacion.ITEMS, this));
     }
 
-
+   /* public interface EscuchaFragmento2 {
+        void alSeleccionarItem(String idUser);
+    }*/
 
     @Override
     public void onClick(AdaptadorArticulos.ViewHolder viewHolder, String idArticulo) {
 
     }
 
-
+@Override
+    public void onStop(){
+        Publicacion.limpiarpublicaciones();
+        super.onStop();
+}
 }

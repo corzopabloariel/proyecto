@@ -21,8 +21,8 @@ public class Usuario {
     public static final List<User> ITEMS = new ArrayList<User>();
     public static User deprueba=new User("Usuario de prueba","deprueba@gmail.com","pass");
     public static final Map<String, User> MAPA_ITEMS = new HashMap<String, User>();
-    static {
-        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+
+    public static void Cargarusuarios(){
         DatabaseReference mDatabase;
         mDatabase= FirebaseDatabase.getInstance().getReference();
         agregarItem(deprueba);
@@ -30,20 +30,21 @@ public class Usuario {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("tag", "Children" + dataSnapshot.getKey());
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            boolean tiene = snapshot.hasChild("servicios");
-                            boolean esservicio = snapshot.child("servicios").hasChild(MainActivity.idServicio);
-                            if (tiene & esservicio) {
-                                String nombre = (String) snapshot.child("nombre").getValue();
-                                String email = (String) snapshot.child("email").getValue();
-                                String id=snapshot.getKey();
-                                User user= new User(nombre,email,"pass");
-                                user.set_id(id);
-                                agregarItem(user);
-                            }
 
+                          if(snapshot.hasChild("servicios")) {
+                              Log.d("tag", "hijo" + snapshot);
+                              if (snapshot.child("servicio").getKey() == MainActivity.idServicio) {
+                                  Log.d("siiiii", snapshot.getKey());
+                                  String nombre = (String) snapshot.child("nombre").getValue();
+                                  String email = (String) snapshot.child("email").getValue();
+                                  String id = snapshot.getKey();
+                                  User user = new User(nombre, email, "pass");
+                                  user.set_id(id);
+                                  agregarItem(user);
+                              }
+                          }
                         }
                     }
 
@@ -52,6 +53,9 @@ public class Usuario {
 
                     }
                 });}
+                public static void limpiarusuarios(){
+                    ITEMS.clear();
+                }
         private static void agregarItem(User item) {
         ITEMS.add(item);
          MAPA_ITEMS.put(item.get_id(), item);

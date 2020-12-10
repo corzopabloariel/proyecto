@@ -37,9 +37,12 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = valores.get(position);
+        String ubicacion=valores.get(position).getLatitud()+" "+valores.get(position).getLongitud();
+       holder.viewUbicacion.setText(ubicacion);
         holder.viewTitulo.setText(valores.get(position).getTitulo());
         holder.viewResumen.setText(valores.get(position).getDescripcion());
         holder.viewFecha.setText(valores.get(position).getFecha());
+
         Glide.with(holder.itemView.getContext())
                 .load(holder.item.getImg())
                 .thumbnail(0.1f)
@@ -72,12 +75,14 @@ public class AdaptadorArticulos extends RecyclerView.Adapter<AdaptadorArticulos.
         public final TextView viewResumen;
         public final TextView viewFecha;
         public final ImageView viewMiniatura;
+        public final TextView viewUbicacion;
 
         public Publicacion.Articulo item;
 
         public ViewHolder(View view) {
             super(view);
             view.setClickable(true);
+            viewUbicacion=(TextView) view.findViewById(R.id.fecha2);
             viewTitulo = (TextView) view.findViewById(R.id.titulo);
             viewResumen = (TextView) view.findViewById(R.id.resumen);
             viewFecha = (TextView) view.findViewById(R.id.fecha);

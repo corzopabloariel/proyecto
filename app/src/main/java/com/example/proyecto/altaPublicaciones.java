@@ -39,6 +39,7 @@ import com.example.proyecto.entity.DialogoIdioma;
 import com.example.proyecto.entity.Publicacion;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -138,23 +139,8 @@ public class altaPublicaciones extends AppCompatActivity {
             String descrip=descripcion.getText().toString();
             String latitud=latid;
             String longitud=longt;
-            String img;
-          /*  StorageReference storageRef = storage.getReference();
-            StorageReference gsReference = storageRef.child("/images/publicacioncontent:/media/external/images/media/"+ photoURI.toString()+".jpg");
-         storageRef.child("/images/publicacioncontent:/media/external/images/media/"+ photoURI.toString()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+            String img=photoURI.toString();
 
-         {
-                @Override
-                public void onSuccess(Uri uri) {
-                    url =uri.toString();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    url="error";
-                }
-            });*/
-            img=url;
             SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMMM 'del' yyyy");
             Date date = new Date();
             File localFile = File.createTempFile("images", "jpg");
@@ -299,8 +285,18 @@ public class altaPublicaciones extends AppCompatActivity {
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                       // Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        if (taskSnapshot.getMetadata() != null) {
+                            if (taskSnapshot.getMetadata().getReference() != null) {
+                                Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                                result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        photoURI = uri;
+                                        //createNewPost(imageUrl);
+                                    }
+                                });
+                            }
+                        }
                     }
                 });
                 publicaRef.putBytes(dato);

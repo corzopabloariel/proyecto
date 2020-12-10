@@ -23,6 +23,16 @@ public class DialogoIdioma extends DialogFragment {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         Log.i("Dialogos", "Opción elegida: " + items[item]);
+                        if(items[item].equals("Español")){
+                            //
+                        }
+                        if(items[item].equals("Inglés")){
+
+                        }
+                        if(items[item].equals("Francés")){
+
+                        }
+
                     }
                 });
 
