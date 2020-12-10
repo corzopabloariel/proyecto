@@ -46,7 +46,7 @@ public static void cargarPublicaciones(String uid) {
     agregarItem(publicaC);
     DatabaseReference mDatabase;
     mDatabase=FirebaseDatabase.getInstance().getReference();
-    FirebaseDatabase.getInstance().getReference().child("publicacion")
+    FirebaseDatabase.getInstance().getReference().child("publicacion").orderByChild("proveedor").equalTo(uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
