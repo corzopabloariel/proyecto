@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +18,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements FragmentoDetalleCategoria.EscuchaFragmento ,FirstFragment.EscuchaFragmento {
+private boolean tablet;
+        public static String idServicio="1";
+        @Override
+            public void alSeleccionarItem(String idArticulo) {
+                /*if (dosPaneles) {
+                    cargarFragmentoDetalle(idArticulo);
+                } else {*/
+                    idServicio =idArticulo;
+                    fragmentDetalle();
+
+                }
 
 
 
@@ -33,7 +45,9 @@ public class MainActivity extends AppCompatActivity  {
 
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
-
+        if(findViewById(R.id.flFragment)!=null){
+            tablet=true;
+        }
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -60,6 +74,7 @@ public class MainActivity extends AppCompatActivity  {
         });
     }
 
+
     private void fragmentHome() {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -79,6 +94,14 @@ public class MainActivity extends AppCompatActivity  {
 
     private void fragmentAccount() {
         Fragment fragment = new AccountFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragment, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    private void fragmentDetalle(){
+        FragmentoDetalleCategoria fragment = new FragmentoDetalleCategoria();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.flFragment, fragment);

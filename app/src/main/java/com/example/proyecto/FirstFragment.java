@@ -18,6 +18,13 @@ import com.example.proyecto.entity.Publicacion;
 
 public class FirstFragment extends Fragment implements AdaptadorServicio.OnItemClickListener {
 
+    private EscuchaFragmento escucha;
+
+    public void cargarDetalle(String idArticulo) {
+        if (escucha != null) {
+            escucha.alSeleccionarItem(idArticulo);
+        }
+    }
 
 
     public FirstFragment() {
@@ -57,12 +64,30 @@ public class FirstFragment extends Fragment implements AdaptadorServicio.OnItemC
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof EscuchaFragmento) {
+            escucha = (EscuchaFragmento) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " debes implementar EscuchaFragmento");
+        }
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        escucha = null;
+    }
 
     @Override
     public void onClick(AdaptadorServicio.ViewHolder viewHolder, String idArticulo) {
-
+        cargarDetalle(idArticulo);
     }
 
 
+    public interface EscuchaFragmento {
+        void alSeleccionarItem(String idArticulo);
+    }
 }

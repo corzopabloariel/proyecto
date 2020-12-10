@@ -28,6 +28,7 @@ public class Categorias {
      */
     public static final List<Categoria> ITEMS = new ArrayList<Categoria>();
 
+
     /**
      * Mapa simulador de búsquedas de articulos por id
      */

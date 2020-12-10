@@ -2,10 +2,13 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="margen_estandar">16dp</dimen>
-    <dimen name="altura_item">144dp</dimen>
+    <dimen name="altura_item">220dp</dimen>
     <dimen name="margen_izquierda_contenido">72dp</dimen>
-    <dimen name="ancho_miniatura">120dp</dimen>
+    <dimen name="ancho_miniatura">160dp</dimen>
     <dimen name="ancho_panel_lista">512dp</dimen>
     <dimen name="grid_spacing">4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
 
 </resources>
